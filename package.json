@@ -1,0 +1,27 @@
+{
+  "name": "web_eng",
+  "version": "1.0.0",
+  "description": "\"# Class-Hub\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/veerjisuthar530/Class-Hub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/veerjisuthar530/Class-Hub/issues"
+  },
+  "homepage": "https://github.com/veerjisuthar530/Class-Hub#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}

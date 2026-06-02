@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>Class Hub</h1>
+            <p id="header-subtitle">Manage your academic performance seamlessly</p>
+            <div id="user-info" class="hidden">
+                <span id="welcome-text"></span>
+                <button id="logout-btn" class="btn danger-btn">Logout</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- LOGIN / SIGNUP SECTION -->
+            <section id="login-section" class="active-section">
+                
+                <div class="login-split-container glass-panel">
+                    <div class="login-hero">
+                        <div class="hero-content">
+                            <h2>Welcome to <br><span class="highlight">Class Hub</span></h2>
+                            <p>The modern platform to manage academic performance, track student progress, and empower education seamlessly.</p>
+                        </div>
+                    </div>
+                    <div class="login-forms-wrapper">
+                        <div id="login-container">
+                            <h2>Welcome Back</h2>
+                            <p class="form-subtitle">Please enter your details to sign in.</p>
+                            <form id="login-form">
+                                <div class="form-group">
+                                    <label for="login-email">Email Address</label>
+                                    <input type="email" id="login-email" required placeholder="e.g. teacher@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Password</label>
+                                    <input type="password" id="login-password" required placeholder="Enter password">
+                                </div>
+                                <button type="submit" class="btn primary-btn">Login</button>
+                                <div id="login-message" class="message hidden"></div>
+                            </form>
+                            <div class="hint">Don't have an account? <a href="#" id="show-signup">Sign Up</a></div>
+                        </div>
+
+                        <div id="signup-container" class="hidden">
+                            <h2>Create Account</h2>
+                            <p class="form-subtitle">Join us to manage classes efficiently.</p>
+                            <form id="signup-form">
+                                <div class="form-group">
+                                    <label for="signup-name">Full Name</label>
+                                    <input type="text" id="signup-name" required placeholder="Your Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-email">Email Address</label>
+                                    <input type="email" id="signup-email" required placeholder="Your Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-password">Password</label>
+                                    <input type="password" id="signup-password" required placeholder="Create password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-role">I am a:</label>
+                                    <div class="custom-select-wrapper">
+                                        <select id="signup-role" required>
+                                            <option value="teacher">Teacher</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn primary-btn">Create Account</button>
+                                <div id="signup-message" class="message hidden"></div>
+                            </form>
+                            <div class="hint">Already have an account? <a href="#" id="show-login">Login</a></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- TEACHER DASHBOARD -->
+            <section id="teacher-dashboard" class="dashboard hidden">
+                <!-- VIEW 1: Classes View -->
+                <div class="dashboard-grid" id="teacher-classes-view">
+                    <!-- Classes Management -->
+                    <div class="glass-panel" style="grid-column: 1 / -1;">
+                        <h2>Manage Classes</h2>
+                        <form id="add-class-form" style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: flex-end; flex-wrap: wrap;">
+                            <div class="form-group" style="flex: 2; margin-bottom: 0; min-width: 200px;">
+                                <label for="class-name">Class Name</label>
+                                <input type="text" id="class-name" required placeholder="e.g. Software Engineering">
+                            </div>
+                            <div class="form-group" style="flex: 1; margin-bottom: 0; min-width: 120px;">
+                                <label for="class-section">Section</label>
+                                <input type="text" id="class-section" required placeholder="e.g. SE6A">
+                            </div>
+                            <button type="submit" class="btn primary-btn" style="margin-bottom: 0; width: auto; padding-left: 2rem; padding-right: 2rem;">Add Class</button>
+                        </form>
+                        <div id="class-form-message" class="message hidden"></div>
+                        <div class="table-container">
+                            <table id="teacher-classes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Section</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teacher-classes-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: Class Details View (Hidden by default) -->
+                <div class="dashboard-grid hidden" id="teacher-class-details-view">
+                    <div class="glass-panel" style="grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;">
+                        <h2 id="current-class-title" style="margin-bottom:0;">Class Details</h2>
+                        <button id="back-to-classes-btn" class="btn action-btn" style="margin:0;">Back to Classes</button>
+                    </div>
+
+                    <!-- Add Student Form -->
+                    <div class="glass-panel">
+                        <h2>Register New Student</h2>
+                        <form id="add-student-form">
+                            <div class="form-group">
+                                <label for="student-name">Full Name</label>
+                                <input type="text" id="student-name" required placeholder="Student Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="student-email">Email</label>
+                                <input type="email" id="student-email" required placeholder="Student Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="student-password">Password</label>
+                                <input type="password" id="student-password" required placeholder="Default Password">
+                            </div>
+                            <button type="submit" class="btn primary-btn">Register Student</button>
+                            <div id="student-form-message" class="message hidden"></div>
+                        </form>
+                    </div>
+
+                    <!-- Students List -->
+                    <div class="glass-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 style="margin-bottom: 0;">Students Roster</h2>
+                            <button id="export-excel-btn" class="btn action-btn" style="margin-right: 0;">Export to Excel</button>
+                        </div>
+                        <div class="table-container">
+                            <table id="teacher-students-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teacher-students-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Assignments Management (Teacher) -->
+                    <div class="glass-panel" style="grid-column: 1 / -1; margin-top: 2rem;">
+                        <h2>Assignments Management</h2>
+                        <form id="create-assignment-form" enctype="multipart/form-data">
+                            <div class="marks-grid">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" id="assignment-title" required placeholder="e.g. Final Project">
+                                </div>
+                                <div class="form-group">
+                                    <label>Due Date</label>
+                                    <input type="date" id="assignment-due" required style="color-scheme: dark;">
+                                </div>
+                                <div class="form-group" style="grid-column: span 2;">
+                                    <label>Description</label>
+                                    <input type="text" id="assignment-desc" placeholder="Details about assignment...">
+                                </div>
+                                <div class="form-group" style="grid-column: span 2;">
+                                    <label>Attachment (Optional)</label>
+                                    <input type="file" id="assignment-file">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn primary-btn">Create Assignment</button>
+                            <div id="assignment-form-message" class="message hidden"></div>
+                        </form>
+
+                        <h3 class="mt-2">Created Assignments</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Due Date</th>
+                                        <th>File</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teacher-assignments-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Marks Management Modal (Hidden by default) -->
+                <div id="marks-modal" class="glass-panel hidden mt-2">
+                    <div class="modal-header">
+                        <h2 id="marks-modal-title">Manage Marks</h2>
+                        <button id="close-modal-btn" class="btn danger-btn">Close</button>
+                    </div>
+                    
+                    <form id="add-marks-form" class="marks-form">
+                        <input type="hidden" id="marks-student-id">
+                        <input type="hidden" id="marks-record-id"> <!-- Added for editing -->
+                        <div class="marks-grid">
+                            <input type="hidden" id="marks-subject">
+                            <div class="form-group">
+                                <label>Attendance</label>
+                                <input type="number" id="marks-attendance" min="0" max="100" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Participation</label>
+                                <input type="number" id="marks-participation" min="0" max="100" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Project</label>
+                                <input type="number" id="marks-project" min="0" max="100" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Mid Term</label>
+                                <input type="number" id="marks-mid" min="0" max="100" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Final Term</label>
+                                <input type="number" id="marks-final" min="0" max="100" value="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Save Marks</button>
+                    </form>
+
+                    <h3 class="mt-2">Current Marks</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Attd</th>
+                                    <th>Part.</th>
+                                    <th>Proj</th>
+                                    <th>Mid</th>
+                                    <th>Final</th>
+                                    <th>Total</th>
+                                    <th>Grade</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-marks-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <!-- Submissions Modal (Hidden by default) -->
+                <div id="submissions-modal" class="glass-panel hidden mt-2">
+                    <div class="modal-header">
+                        <h2 id="submissions-modal-title">Submissions</h2>
+                        <button id="close-submissions-modal" class="btn danger-btn">Close</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Date</th>
+                                    <th>Notes</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacher-submissions-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STUDENT DASHBOARD -->
+            <section id="student-dashboard" class="dashboard hidden">
+                <div id="student-classes-list-view">
+                    <div class="glass-panel" style="margin-bottom: 2rem;">
+                        <h2>My Classes</h2>
+                        <div id="student-classes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            <!-- Class cards will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="student-class-details-view" class="hidden">
+                    <div class="glass-panel" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 style="margin-bottom: 0;">My Class Info</h2>
+                            <p id="student-class-info" style="font-size: 1.2rem; color: var(--text-secondary); margin-top: 0.5rem;"></p>
+                        </div>
+                        <button id="student-back-to-classes-btn" class="btn action-btn" style="margin:0;">Back to Classes</button>
+                    </div>
+                <div class="glass-panel">
+                    <h2>My Academic Record</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Attendance</th>
+                                    <th>Participation</th>
+                                    <th>Project</th>
+                                    <th>Mid Term</th>
+                                    <th>Final Term</th>
+                                    <th>Total</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="my-marks-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Assignments Section -->
+                <div class="glass-panel mt-2">
+                    <h2>Available Assignments</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Teacher</th>
+                                    <th>Due Date</th>
+                                    <th>File</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-assignments-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Submit Assignment Modal -->
+                <div id="submit-assignment-modal" class="glass-panel hidden mt-2">
+                    <div class="modal-header">
+                        <h2 id="submit-modal-title">Submit Assignment</h2>
+                        <button id="close-submit-modal" class="btn danger-btn">Close</button>
+                    </div>
+                    <form id="submit-assignment-form" enctype="multipart/form-data">
+                        <input type="hidden" id="submit-assignment-id">
+                        <div class="form-group">
+                            <label>Notes (Optional)</label>
+                            <input type="text" id="submit-notes" placeholder="Any comments for the teacher?">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload File</label>
+                            <input type="file" id="submit-file" required>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Upload Submission</button>
+                        <div id="submit-form-message" class="message hidden"></div>
+                    </form>
+                </div>
+                </div> <!-- End student-class-details-view -->
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
